@@ -1,3 +1,4 @@
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +15,15 @@ public class ShopService {
             products.add(productToOrder);
         }
 
-        Order newOrder = new Order(UUID.randomUUID().toString(), products, Status.COMPLETED);
+        Order newOrder = new Order(UUID.randomUUID().toString(), products, Status.COMPLETED, Instant.now());
 
         return orderRepo.addOrder(newOrder);
     }
 
     public List<Order> filterByStatus(Status status){
 
-        return new ArrayList<>(orderRepo.getOrders().stream()
-                .filter(order -> order.status().equals(status)).toList());
+        return orderRepo.getOrders().stream()
+                .filter(order -> order.status().equals(status)).toList();
     }
 
     public Order updateOrder(String orderId, Status newStatus){
