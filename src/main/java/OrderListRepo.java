@@ -1,8 +1,9 @@
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@NoArgsConstructor
 @Getter
 public class OrderListRepo implements OrderRepo{
     private final List<Order> orders = new ArrayList<>();

@@ -1,17 +1,24 @@
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
-import java.util.UUID;
+import java.time.Instant;
+import java.util.*;
+
+
+@RequiredArgsConstructor
 
 public class ShopService {
-    private final ProductRepo productRepo = new ProductRepo();
-    private final OrderRepo orderRepo = new OrderMapRepo();
+    private final ProductRepo productRepo;
+    private final OrderRepo orderRepo ;
+
+    public ShopService() {
+        productRepo= new ProductRepo();
+        orderRepo = new OrderListRepo();
+    }
 
     public Order addOrder(List<String> productIds) {
         List<Product> products = new ArrayList<>();
         for (String productId : productIds) {
-            Product productToOrder = productRepo.getProductById(productId).orElseThrow(() -> new IllegalArgumentException("Product mit der Id:" + productId +  "konnte nicht bestellt werden!"));
+            Product productToOrder = productRepo.getProductById(productId).orElseThrow(() -> new IllegalArgumentException("Product mit der Id:" + productId +  " konnte nicht bestellt werden!"));
             products.add(productToOrder);
         }
 
@@ -35,5 +42,17 @@ public class ShopService {
         orderRepo.addOrder(updatedOrder);
 
         return updatedOrder;
+    }
+
+
+    public void printOrders() {
+        orderRepo.getOrders().forEach(order ->
+                System.out.println(
+                        "Order ID: " + order.id() +
+                                ", Status: " + order.status() +
+                                ", Time: " + order.timeBenchmark() +
+                                ", Products: " + order.products()
+                )
+        );
     }
 }

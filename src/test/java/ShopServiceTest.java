@@ -9,7 +9,7 @@ class ShopServiceTest {
 
     @Test
     void addOrderTest() {
-        //GIVEN
+
         ShopService shopService = new ShopService();
         List<String> productsIds = List.of("1");
 
