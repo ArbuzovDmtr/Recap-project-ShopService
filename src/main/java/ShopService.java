@@ -23,8 +23,13 @@ public class ShopService {
 
         return new ArrayList<>(orderRepo.getOrders().stream()
                 .filter(order -> order.status().equals(status)).toList());
+    }
 
+    public Order updateOrder(String orderId, Status newStatus){
 
-
+        Order updatedOrder =orderRepo.getOrderById(orderId).withStatus(newStatus);
+        orderRepo.removeOrder(orderId);
+        orderRepo.addOrder(updatedOrder);
+        return updatedOrder;
     }
 }

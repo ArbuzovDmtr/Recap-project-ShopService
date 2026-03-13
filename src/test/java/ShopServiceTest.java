@@ -50,11 +50,11 @@ class ShopServiceTest {
 
     @Test
     void filterByStatusTestFailure() {
-        //GIVEN
+
         ShopService shopService = new ShopService();
         List<String> productsIds = List.of("1");
 
-        //WHEN
+
         Order actual = shopService.addOrder(productsIds);
         Order actual2 = shopService.addOrder(List.of("1"));
 
@@ -65,6 +65,21 @@ class ShopServiceTest {
 
         List<Order> expected = List.of(order2,order);
         assertNotEquals(new HashSet<>(expected),new HashSet<>(shopService.filterByStatus(Status.COMPLETED)));
+    }
+
+    @Test
+    void updateStatusTest(){
+
+        {
+            ShopService shopService = new ShopService();
+            Order actual = shopService.addOrder(List.of("1"));
+
+            Order updated = shopService.updateOrder(actual.id(), Status.PROCESSING);
+
+            assertEquals(Status.PROCESSING, updated.status());
+        }
 
     }
+
+
 }
