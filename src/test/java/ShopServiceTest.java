@@ -24,17 +24,14 @@ class ShopServiceTest {
 
     @Test
     void addOrderTest_whenInvalidProductId_expectNull() {
+        assertThrows(IllegalArgumentException.class,()->{
         //GIVEN
         ShopService shopService = new ShopService();
         List<String> productsIds = List.of("1", "2");
+        shopService.addOrder(productsIds);
 
-        //WHEN
-        Order actual = shopService.addOrder(productsIds);
-
-        //THEN
-        assertNull(actual);
+    });
     }
-
     @Test
     void filterByStatusTest() {
 

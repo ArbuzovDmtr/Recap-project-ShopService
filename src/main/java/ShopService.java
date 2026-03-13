@@ -10,11 +10,7 @@ public class ShopService {
     public Order addOrder(List<String> productIds) {
         List<Product> products = new ArrayList<>();
         for (String productId : productIds) {
-            Product productToOrder = productRepo.getProductById(productId).orElse(null);
-            if (productToOrder == null) {
-                System.out.println("Product mit der Id: " + productId + " konnte nicht bestellt werden!");
-                return null;
-            }
+            Product productToOrder = productRepo.getProductById(productId).orElseThrow(() -> new IllegalArgumentException("Product mit der Id:" + productId +  "konnte nicht bestellt werden!"));
             products.add(productToOrder);
         }
 
